@@ -27,11 +27,9 @@ public final class RestaurantController extends Controller {
     public Result getById(Integer id) {
 
         final Restaurant restaurant = Restaurant.find.byId(id);
-
         if(restaurant == null) {
-            return unauthorized(); //sic
+            return notFound();
         }
-
         return ok(
                 Json.toJson(restaurant
                 )
