@@ -12,6 +12,7 @@ import services.RestaurantService;
 
 import javax.inject.Inject;
 import java.util.Optional;
+import java.util.concurrent.CompletionStage;
 
 /**
  * Manage a database of restaurants
@@ -19,7 +20,7 @@ import java.util.Optional;
 @With(VersionedAction.class)
 public final class RestaurantController extends Controller {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    private final static Logger log = LoggerFactory.getLogger(RestaurantController.class);
     private final RestaurantService service;
 
     @Inject
@@ -27,14 +28,10 @@ public final class RestaurantController extends Controller {
         this.service = service;
     }
 
-    public Result list() {
+    public CompletionStage<Result> list() {
         log.info("Requested list");
-        final Result result = okJson(service.findAll());
-        log.info("Response  ok");
-        return result;
+        return promiseJson(service.findAll()); //Play says that is ok to return this, wonder what wil return
     }
-
-
 
     /**
      * @param id Id of the restaurant to edit
@@ -57,5 +54,12 @@ public final class RestaurantController extends Controller {
 
     private static Result okJson(Object o) {
         return ok(Json.toJson(o));
+    }
+    private static <T> CompletionStage<Result> promiseJson(CompletionStage<T> t) {
+        return t.thenApply(RestaurantController::okJson)
+                .exceptionally(ex-> {
+                    log.error("Unrecoverable error",ex);
+                    return null;
+                });
     }
 }
