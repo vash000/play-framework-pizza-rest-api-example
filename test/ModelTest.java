@@ -15,7 +15,7 @@ public class ModelTest {
     
 
     @Test
-    public void findById() {
+    public void shouldFindSingleRestaurantByItsIdInDataBase() {
         running(fakeApplication(inMemoryDatabase()), () -> {
             //When
             final int restaurantId = 1;

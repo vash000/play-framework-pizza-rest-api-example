@@ -8,7 +8,7 @@ import play.libs.Json;
 import play.mvc.With;
 
 /**
- * Manage a database of computers
+ * Manage a database of restaurants
  */
 @With(VersionedAction.class)
 public final class RestaurantController extends Controller {

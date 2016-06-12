@@ -6,7 +6,7 @@ import play.mvc.Result;
 
 import java.util.concurrent.CompletionStage;
 
-/*
+/**
    Decorate each response with predefined application version
 */
 public class VersionedAction extends Action.Simple {

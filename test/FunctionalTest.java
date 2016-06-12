@@ -51,7 +51,7 @@ public class FunctionalTest {
 
 
     @Test
-    public void findById() throws IOException {
+    public void shouldFindSingleRestaurantByItsIdAfterRequest() throws IOException {
 
         int givenRestaurantId = 1;
 

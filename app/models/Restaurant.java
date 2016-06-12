@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * Represent one to one database mapping
+ */
 @Entity
 public class Restaurant extends Model {
 
