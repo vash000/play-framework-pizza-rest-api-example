@@ -11,7 +11,7 @@ import java.util.concurrent.CompletionStage;
 */
 public class VersionedAction extends Action.Simple {
 
-    public final static String VERSION = "pizza-sample-v1" + "+json";
+    public final static String VERSION = "pizza-sample-v1" + "+json;charset=utf-8";
 
     @Override
     public CompletionStage<Result> call(Http.Context context) {
