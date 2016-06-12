@@ -3,7 +3,7 @@
 # --- !Ups
 ---
 create table restaurant (
-  id                        int not null,
+  id                        bigint not null,
   name                      varchar(255) not null,
   address1                  varchar(255) not null,
   address2                  varchar(255) not null,

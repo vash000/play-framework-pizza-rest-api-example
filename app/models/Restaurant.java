@@ -21,7 +21,7 @@ public class Restaurant extends Model {
     private static final long serialVersionUID = 1L;
 
     @Id
-    public Integer id;
+    public Long id;
 
     @Constraints.Required
     public String name;
@@ -38,10 +38,6 @@ public class Restaurant extends Model {
     @Constraints.Required
     public BigDecimal longitude;
 
-    /**
-     * Generic query helper for entity Computer with id Long
-     */
-    public static Find<Integer,Restaurant> find = new Find<Integer,Restaurant>(){};
 
     @Override
     public boolean equals(Object o) {
