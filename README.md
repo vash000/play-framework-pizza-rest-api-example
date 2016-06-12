@@ -2,6 +2,10 @@
 
 This is an example Play application that uses Java, and communicates with an in memory database using EBean.
 
+Based on implementation Pizza API from here:
+
+[http://docs.pizzaapp.apiary.io/](http://docs.pizzaapp.apiary.io/)
+
 ## Play
 
 Play documentation is here:
