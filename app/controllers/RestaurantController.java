@@ -1,30 +1,25 @@
 package controllers;
 
-import controllers.actions.VersionedAction;
 import models.Restaurant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.cache.CacheApi;
-import play.mvc.Controller;
 import play.mvc.Result;
-import play.libs.Json;
-import play.mvc.With;
 import services.RestaurantService;
 
 import javax.inject.Inject;
-import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 
 /**
  * Manage a database of restaurants
  */
-@With(VersionedAction.class)
-public final class RestaurantController extends Controller {
+public final class RestaurantController extends PizzaAppController {
 
     private final static Logger log = LoggerFactory.getLogger(RestaurantController.class);
     private final RestaurantService service;
     private final CacheApi cache;
+
     @Inject
     public RestaurantController(RestaurantService service, CacheApi cache) {
         this.service = service;
@@ -37,7 +32,7 @@ public final class RestaurantController extends Controller {
     }
 
     /**
-     * @param id Id of the restaurant to edit
+     * @param id Id of the restaurant find
      */
     public Result getById(Integer id) {
         log.info("Requested by id: " + String.valueOf(id));
@@ -45,14 +40,14 @@ public final class RestaurantController extends Controller {
         final Optional<Restaurant> restaurant = fetchById(id);
 
         final Result result;
-        if(restaurant.isPresent()) {
+        if (restaurant.isPresent()) {
             final Restaurant fresh = restaurant.get();
-            cache.set("restaurant."+ fresh.id,fresh, 5);
+            cache.set("restaurant." + fresh.id, fresh, 5);
             result = okJson(fresh);
             log.info("Response ok id: " + String.valueOf(id));
         } else {
             result = notFound(); //No body
-            log.info("Response notfound " + String.valueOf(id));
+            log.info("Response not found " + String.valueOf(id));
         }
         return result;
     }
@@ -61,21 +56,10 @@ public final class RestaurantController extends Controller {
 
         final Optional<Restaurant> opt = Optional.ofNullable(cache.get("restaurant." + String.valueOf(id)));
 
-        if(opt.isPresent()) {
+        if (opt.isPresent()) {
             return opt;
         } else {
             return service.findById(id);
         }
-    }
-
-    private static Result okJson(Object o) {
-        return ok(Json.toJson(o));
-    }
-    private static <T> CompletionStage<Result> promiseJson(CompletionStage<T> t) {
-        return t.thenApply(RestaurantController::okJson)
-                .exceptionally(ex-> {
-                    log.error("Unrecoverable error",ex);
-                    return null;
-                });
     }
 }

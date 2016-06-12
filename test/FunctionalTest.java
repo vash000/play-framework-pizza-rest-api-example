@@ -17,6 +17,7 @@ import play.test.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import org.junit.*;
+import repositories.RestaurantRepository;
 
 import javax.inject.Inject;
 
@@ -32,6 +33,8 @@ public class FunctionalTest {
         Module testModule = new AbstractModule() {
             @Override
             public void configure() {
+
+
                 // Install custom test binding here
             }
         };
@@ -49,6 +52,24 @@ public class FunctionalTest {
         Helpers.stop(application);
     }
 
+    @Test
+    public void shouldFindAllRestaurantsAfterRequest() throws IOException {
+
+        //Given
+
+
+
+        //When
+        Result result = Helpers.route(application, controllers.routes.RestaurantController.list());
+
+        //Then
+        assertThat(result.status(), equalTo(Helpers.OK));
+
+        final List<Restaurant> restaurants = readListValue(result, Restaurant.class);
+        assertNotNull(restaurants);
+        assertEquals(restaurants.size(),2);
+
+    }
 
     @Test
     public void shouldFindSingleRestaurantByItsIdAfterRequest() throws IOException {
