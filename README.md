@@ -22,3 +22,16 @@ and
 
 [https://ebean-orm.github.io/](https://ebean-orm.github.io/)
 
+To run: 
+
+Download and install activator 1.3.6 to your enviorment and just  
+
+To star:
+>activator run
+
+To run tests:
+>activator test 
+
+or use Docker image from here: 
+
+[https://github.com/Ingensi/docker-play-framework](https://github.com/Ingensi/docker-play-framework)
